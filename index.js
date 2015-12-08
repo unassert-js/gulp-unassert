@@ -1,5 +1,5 @@
 /**
- * gulp-derequire
+ * gulp-unassert
  * 
  * https://github.com/twada/gulp-unassert
  *
