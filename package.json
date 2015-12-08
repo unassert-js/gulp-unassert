@@ -10,9 +10,9 @@
   "bugs": "https://github.com/twada/gulp-unassert/issues",
   "dependencies": {
     "bufferstreams": "^1.1.0",
-    "escodegen": "^1.7.1",
-    "esprima": "^2.7.0",
-    "gulp-util": "^3.0.7",
+    "escodegen": "^1.7.0",
+    "esprima": "^2.5.0",
+    "gulp-util": "^3.0.0",
     "through2": "^2.0.0",
     "unassert": "^1.3.0"
   },
