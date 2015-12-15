@@ -15,6 +15,20 @@ var gutil = require('gulp-util');
 var BufferStreams = require('bufferstreams');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
+var applySourceMap = require('vinyl-sourcemaps-apply');
+
+function applyUnassertWithSourceMap (file, encoding, opt) {
+    var inMap = file.sourceMap;
+    var code = file.contents.toString(encoding);
+    var ast = esprima.parse(code, { sourceType: 'module', loc: true });
+    var instrumented = escodegen.generate(unassert(ast), {
+        file: file.relative,
+        sourceMap: file.relative,
+        sourceMapWithCode: true
+    });
+    file.contents = new Buffer(instrumented.code);
+    applySourceMap(file, instrumented.map.toString());
+}
 
 function applyUnassertWithoutSourceMap (code) {
     var ast = esprima.parse(code, { sourceType: 'module' });
@@ -22,12 +36,10 @@ function applyUnassertWithoutSourceMap (code) {
 }
 
 function transform (file, encoding, opt) {
-    var inMap = file.sourceMap;
-    var code = file.contents.toString(encoding);
-    if (!inMap) {
-        return new Buffer(applyUnassertWithoutSourceMap(code));
+    if (file.sourceMap) {
+        applyUnassertWithSourceMap(file, encoding, opt);
     } else {
-        throw new Error('SourceMap is not supported yet');
+        file.contents = new Buffer(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
     }
 }
 
@@ -38,7 +50,7 @@ module.exports = function (opt) {
             this.push(file);
         } else if (file.isBuffer()) {
             try {
-                file.contents = transform(file, encoding, opt);
+                transform(file, encoding, opt);
                 this.push(file);
             } catch (err) {
                 return callback(new gutil.PluginError('gulp-unassert', err, {showStack: true}));

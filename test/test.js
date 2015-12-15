@@ -105,4 +105,53 @@ describe('gulp-unassert', function () {
             });
         });
     });
+
+    describe('SourceMap support', function () {
+        it('with initial sourceMap created by gulp-sourcemaps', function (done) {
+            var stream = unassert();
+            var srcFileContents = fs.readFileSync('test/fixtures/patterns/fixture.js');
+            var srcFile = new gutil.File({
+                path: process.cwd() + "/test/fixtures/patterns/fixture.js",
+                cwd: process.cwd(),
+                base: process.cwd() + "/test/fixtures/patterns",
+                contents: srcFileContents
+            });
+            // simulate initial raw map created by gulp-sourcemaps
+            srcFile.sourceMap = {
+                version : 3,
+                file: srcFile.relative,
+                names: [],
+                mappings: '',
+                sources: [ srcFile.relative ],
+                sourcesContent: [ srcFileContents.toString('utf8') ]
+            };
+            stream.on("error", function(err) {
+                assert(err);
+                done(err);
+            });
+            stream.on("data", function (newFile) {
+                assert(newFile);
+                assert(newFile.contents);
+                assert.equal(newFile.contents.toString(), fs.readFileSync('test/fixtures/patterns/expected.js', 'utf8'));
+                assert(newFile.sourceMap, 'push file.sourceMap to downstream');
+                assert.deepEqual(newFile.sourceMap, {
+                    version: 3,
+                    sources: [
+                        'fixture.js'
+                    ],
+                    names: [
+                        'add',
+                        'a',
+                        'b'
+                    ],
+                    mappings: 'AAAA;AAIA,SAASA,GAAT,CAAcC,CAAd,EAAiBC,CAAjB,EAAoB;AAAA,IAqDhB,OAAOD,CAAA,GAAIC,CAAX,CArDgB;AAAA',
+                    file: 'fixture.js',
+                    sourcesContent: [ srcFileContents.toString('utf8') ] 
+                });
+                done();
+            });
+            stream.write(srcFile);
+            stream.end();
+        });
+    });
 });
