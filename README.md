@@ -34,10 +34,38 @@ Then, add it to your `gulpfile.js`:
 ```javascript
 var unassert = require('gulp-unassert');
 
-gulp.src('./src/*.js')
-    .pipe(unassert())
-    .pipe(gulp.dest('./dist'));
+gulp.task('build', function () {
+    gulp.src('./src/*.js')
+        .pipe(unassert())
+        .pipe(gulp.dest('./dist'));
+});
 ```
+
+
+## Source maps
+
+gulp-unassert can be used with [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) to generate source maps for the transformed javascript code. Note that you should `init` gulp-sourcemaps prior to running the gulp-unassert and `write` the source maps after. gulp-unassert works well with some gulp plugins that supports [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps).
+
+```javascript
+var unassert = require('gulp-unassert');
+var coffee = require('gulp-coffee');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+
+gulp.task('build', function () {
+    // compile, instrument then concatinate
+    gulp.src('./src/**/*.coffee')
+        .pipe(sourcemaps.init())
+        .pipe(coffee({bare: true}))
+        .pipe(unassert())
+        .pipe(concat('bundle.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./build'));
+    // will write the source maps inline in the code
+});
+```
+
+For more information, see [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps).
 
 
 ## Changelog
