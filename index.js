@@ -16,18 +16,55 @@ var BufferStreams = require('bufferstreams');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
 var applySourceMap = require('vinyl-sourcemaps-apply');
+var convert = require('convert-source-map');
+var transfer = require('multi-stage-sourcemap').transfer;
+
+function mergeSourceMap(incomingSourceMap, outgoingSourceMap) {
+    if (typeof outgoingSourceMap === 'string' || outgoingSourceMap instanceof String) {
+        outgoingSourceMap = JSON.parse(outgoingSourceMap);
+    }
+    if (!incomingSourceMap) {
+        return outgoingSourceMap;
+    }
+    return JSON.parse(transfer({fromSourceMap: outgoingSourceMap, toSourceMap: incomingSourceMap}));
+}
+
+function overwritePropertyIfExists (name, from, to) {
+    if (from.hasOwnProperty(name)) {
+        to.setProperty(name, from[name]);
+    }
+}
 
 function applyUnassertWithSourceMap (file, encoding, opt) {
     var inMap = file.sourceMap;
     var code = file.contents.toString(encoding);
+
     var ast = esprima.parse(code, { sourceType: 'module', loc: true });
     var instrumented = escodegen.generate(unassert(ast), {
         file: file.relative,
         sourceMap: file.relative,
         sourceMapWithCode: true
     });
+    var outMap = convert.fromJSON(instrumented.map.toString());
+    overwritePropertyIfExists('sources', inMap, outMap);
+    overwritePropertyIfExists('sourcesContent', inMap, outMap);
+    overwritePropertyIfExists('sourceRoot', inMap, outMap);
+
+    var reMap;
+    if (inMap.mappings === '') {
+        // when incoming SourceMap is an initial sourceMap created by gulp-sourcemaps
+        applySourceMap(file, outMap.toJSON());
+        reMap = convert.fromObject(file.sourceMap);
+    } else {
+        reMap = convert.fromObject(mergeSourceMap(inMap, outMap.toJSON()));
+    }
+    overwritePropertyIfExists('sources', inMap, reMap);
+    overwritePropertyIfExists('sourcesContent', inMap, reMap);
+    overwritePropertyIfExists('sourceRoot', inMap, reMap);
+    overwritePropertyIfExists('file', inMap, reMap);
+
     file.contents = new Buffer(instrumented.code);
-    applySourceMap(file, instrumented.map.toString());
+    file.sourceMap = reMap.toObject();
 }
 
 function applyUnassertWithoutSourceMap (code) {

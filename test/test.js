@@ -153,5 +153,47 @@ describe('gulp-unassert', function () {
             stream.write(srcFile);
             stream.end();
         });
+
+        it('with upstream sourceMap', function (done) {
+            var stream = unassert();
+            var originalFileContents = fs.readFileSync('test/fixtures/coffee/fixture.coffee', 'utf8');
+            var srcFile = new gutil.File({
+                path: process.cwd() + "/test/fixtures/coffee/fixture.js",
+                cwd: process.cwd(),
+                base: process.cwd() + "/test/fixtures/coffee",
+                contents: fs.readFileSync('test/fixtures/coffee/fixture.js')
+            });
+            srcFile.sourceMap = {
+                version: 3,
+                sources: [ 'fixture.coffee' ],
+                names: [],
+                mappings: 'AAAA,IAAA;;AAAA,MAAA,GAAS,OAAA,CAAQ,QAAR;;AAET,GAAA,GAAM,SAAC,CAAD,EAAI,CAAJ;EACJ,OAAO,CAAC,MAAR,CAAe,OAAO,CAAP,KAAY,QAA3B;EACA,MAAA,CAAO,CAAC,KAAA,CAAM,CAAN,CAAR;EACA,MAAM,CAAC,KAAP,CAAa,OAAO,CAApB,EAAuB,QAAvB;EACA,MAAM,CAAC,EAAP,CAAU,CAAC,KAAA,CAAM,CAAN,CAAX;SACA,CAAA,GAAI;AALA',
+                file: 'fixture.js',
+                sourceRoot: '',
+                sourcesContent: [ originalFileContents ]
+            };
+            stream.on("error", function(err) {
+                assert(err);
+                done(err);
+            });
+            stream.on("data", function (newFile) {
+                assert(newFile);
+                assert(newFile.contents);
+                assert.equal(newFile.contents.toString() + '\n', fs.readFileSync('test/fixtures/coffee/expected.js', 'utf8'));
+                assert(newFile.sourceMap, 'push file.sourceMap to downstream');
+                assert.deepEqual(newFile.sourceMap, {
+                    version: 3,
+                    sources: [ 'fixture.coffee' ],
+                    names: [],
+                    mappings: 'AAAA,IAAA,GAAA,EAAA,MAAA;AAEA,GAAA,GAAM,UAAC,CAAD,EAAI,CAAJ,EAAA;AAAA,WAKJ,CAAA,GAAI,EALA;AAAA,CAAN',
+                    file: 'fixture.js',
+                    sourceRoot: '',
+                    sourcesContent: [ originalFileContents ] 
+                });
+                done();
+            });
+            stream.write(srcFile);
+            stream.end();
+        });
     });
 });
