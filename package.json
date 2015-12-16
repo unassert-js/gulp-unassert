@@ -35,6 +35,7 @@
   "homepage": "http://github.com/twada/gulp-unassert",
   "keywords": [
     "DbC",
+    "unassert",
     "assert",
     "assertion",
     "gulpplugin"
