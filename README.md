@@ -15,10 +15,10 @@
 
 ### Related modules
 
-- [unassert](https://github.com/twada/unassert): Remove assertions from AST
-- [unassertify](https://github.com/twada/unassertify): Browserify transform to remove assertions on build
-- [babel-plugin-unassert](https://github.com/twada/babel-plugin-unassert): Babel plugin to remove assertions on build
-- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): A webpack loader to remove assertions on production build
+- [unassert](https://github.com/twada/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
+- [babel-plugin-unassert](https://github.com/twada/babel-plugin-unassert): Babel plugin for unassert
+- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
 
 
 ## Usage
