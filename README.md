@@ -75,7 +75,7 @@ See [CHANGELOG](https://github.com/twada/gulp-unassert/blob/master/CHANGELOG.md)
 
 ## Author
 
-* [Takuto Wada](http://github.com/twada)
+* [Takuto Wada](https://github.com/twada)
 
 
 ## License
@@ -85,11 +85,11 @@ Licensed under the [MIT](https://github.com/twada/gulp-unassert/blob/master/LICE
 [npm-url]: https://npmjs.org/package/gulp-unassert
 [npm-image]: https://badge.fury.io/js/gulp-unassert.svg
 
-[travis-url]: http://travis-ci.org/twada/gulp-unassert
+[travis-url]: https://travis-ci.org/twada/gulp-unassert
 [travis-image]: https://secure.travis-ci.org/twada/gulp-unassert.svg?branch=master
 
 [depstat-url]: https://gemnasium.com/twada/gulp-unassert
 [depstat-image]: https://gemnasium.com/twada/gulp-unassert.svg
 
 [license-url]: https://github.com/twada/gulp-unassert/blob/master/LICENSE-MIT
-[license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
+[license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
