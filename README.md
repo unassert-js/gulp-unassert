@@ -19,6 +19,7 @@
 - [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
 - [babel-plugin-unassert](https://github.com/twada/babel-plugin-unassert): Babel plugin for unassert
 - [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
+- [unassert-cli](https://github.com/twada/unassert-cli): CLI for unassert
 
 
 ## Usage
