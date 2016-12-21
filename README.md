@@ -5,7 +5,7 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![License][license-image]][license-url]
 
-> A [gulp](https://github.com/gulpjs/gulp) plugin for [unassert](https://github.com/twada/unassert).
+> A [gulp](https://github.com/gulpjs/gulp) plugin for [unassert](https://github.com/unassert-js/unassert).
 
 
 ## Description
@@ -15,11 +15,11 @@
 
 ### Related modules
 
-- [unassert](https://github.com/twada/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
-- [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
-- [babel-plugin-unassert](https://github.com/twada/babel-plugin-unassert): Babel plugin for unassert
-- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
-- [unassert-cli](https://github.com/twada/unassert-cli): CLI for unassert
+- [unassert](https://github.com/unassert-js/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassertify](https://github.com/unassert-js/unassertify): Browserify transform for unassert
+- [babel-plugin-unassert](https://github.com/unassert-js/babel-plugin-unassert): Babel plugin for unassert
+- [webpack-unassert-loader](https://github.com/unassert-js/webpack-unassert-loader): Webpack loader for unassert
+- [unassert-cli](https://github.com/unassert-js/unassert-cli): CLI for unassert
 
 
 ## Usage
@@ -71,7 +71,7 @@ For more information, see [gulp-sourcemaps](https://github.com/floridoo/gulp-sou
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/twada/gulp-unassert/blob/master/CHANGELOG.md)
+See [CHANGELOG](https://github.com/unassert-js/gulp-unassert/blob/master/CHANGELOG.md)
 
 
 ## Author
@@ -81,16 +81,16 @@ See [CHANGELOG](https://github.com/twada/gulp-unassert/blob/master/CHANGELOG.md)
 
 ## License
 
-Licensed under the [MIT](https://github.com/twada/gulp-unassert/blob/master/LICENSE-MIT) license.
+Licensed under the [MIT](https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT) license.
 
 [npm-url]: https://npmjs.org/package/gulp-unassert
 [npm-image]: https://badge.fury.io/js/gulp-unassert.svg
 
-[travis-url]: https://travis-ci.org/twada/gulp-unassert
-[travis-image]: https://secure.travis-ci.org/twada/gulp-unassert.svg?branch=master
+[travis-url]: https://travis-ci.org/unassert-js/gulp-unassert
+[travis-image]: https://secure.travis-ci.org/unassert-js/gulp-unassert.svg?branch=master
 
-[depstat-url]: https://gemnasium.com/twada/gulp-unassert
-[depstat-image]: https://gemnasium.com/twada/gulp-unassert.svg
+[depstat-url]: https://gemnasium.com/unassert-js/gulp-unassert
+[depstat-image]: https://gemnasium.com/unassert-js/gulp-unassert.svg
 
-[license-url]: https://github.com/twada/gulp-unassert/blob/master/LICENSE-MIT
+[license-url]: https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat

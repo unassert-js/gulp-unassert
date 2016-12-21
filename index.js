@@ -1,11 +1,11 @@
 /**
  * gulp-unassert
  * 
- * https://github.com/twada/gulp-unassert
+ * https://github.com/unassert-js/gulp-unassert
  *
  * Copyright (c) 2015 Takuto Wada
  * Licensed under the MIT license.
- *   https://github.com/twada/gulp-unassert/blob/master/LICENSE-MIT
+ *   https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT
  */
 'use strict';
 

@@ -7,7 +7,7 @@
     "email": "takuto.wada@gmail.com",
     "url": "https://github.com/twada"
   },
-  "bugs": "https://github.com/twada/gulp-unassert/issues",
+  "bugs": "https://github.com/unassert-js/gulp-unassert/issues",
   "dependencies": {
     "bufferstreams": "^1.1.0",
     "convert-source-map": "^1.1.2",
@@ -32,7 +32,7 @@
     "README.md",
     "index.js"
   ],
-  "homepage": "http://github.com/twada/gulp-unassert",
+  "homepage": "http://github.com/unassert-js/gulp-unassert",
   "keywords": [
     "DbC",
     "unassert",
@@ -44,7 +44,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/twada/gulp-unassert.git"
+    "url": "http://github.com/unassert-js/gulp-unassert.git"
   },
   "scripts": {
     "test": "mocha --require intelli-espower-loader"
