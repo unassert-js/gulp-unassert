@@ -79,6 +79,15 @@ See [CHANGELOG](https://github.com/unassert-js/gulp-unassert/blob/master/CHANGEL
 * [Takuto Wada](https://github.com/twada)
 
 
+## Our Support Policy
+
+We support Node under maintenance. In other words, we stop supporting old Node version when [their maintenance ends](https://github.com/nodejs/LTS).
+
+This means that any other environment is not supported.
+
+NOTE: If gulp-unassert works in any of the unsupported environments, it is purely coincidental and has no bearing on future compatibility. Use at your own risk.
+
+
 ## License
 
 Licensed under the [MIT](https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT) license.
