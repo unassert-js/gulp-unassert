@@ -13,7 +13,7 @@ var unassert = require('unassert');
 var through = require('through2');
 var gutil = require('gulp-util');
 var BufferStreams = require('bufferstreams');
-var esprima = require('esprima');
+var acorn = require('acorn');
 var escodegen = require('escodegen');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var convert = require('convert-source-map');
@@ -39,7 +39,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
     var inMap = file.sourceMap;
     var code = file.contents.toString(encoding);
 
-    var ast = esprima.parse(code, { sourceType: 'module', loc: true });
+    var ast = acorn.parse(code, { sourceType: 'module', locations: true });
     var instrumented = escodegen.generate(unassert(ast), {
         file: file.relative,
         sourceMap: file.relative,
@@ -68,7 +68,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
 }
 
 function applyUnassertWithoutSourceMap (code) {
-    var ast = esprima.parse(code, { sourceType: 'module' });
+    var ast = acorn.parse(code, { sourceType: 'module' });
     return escodegen.generate(unassert(ast));
 }
 

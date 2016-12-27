@@ -9,10 +9,10 @@
   },
   "bugs": "https://github.com/unassert-js/gulp-unassert/issues",
   "dependencies": {
+    "acorn": "^4.0.0",
     "bufferstreams": "^1.1.0",
     "convert-source-map": "^1.1.2",
     "escodegen": "^1.7.0",
-    "esprima": "^2.5.0",
     "gulp-util": "^3.0.0",
     "multi-stage-sourcemap": "^0.2.1",
     "through2": "^2.0.0",
