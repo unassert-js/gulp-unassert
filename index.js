@@ -3,7 +3,7 @@
  * 
  * https://github.com/unassert-js/gulp-unassert
  *
- * Copyright (c) 2015 Takuto Wada
+ * Copyright (c) 2015-2016 Takuto Wada
  * Licensed under the MIT license.
  *   https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT
  */
