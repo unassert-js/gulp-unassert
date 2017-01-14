@@ -1,5 +1,7 @@
 /**
  * gulp-unassert
+ *   Gulp plugin for unassert
+ *     Encourages programming with assertions by providing tools to compile them away.
  * 
  * https://github.com/unassert-js/gulp-unassert
  *

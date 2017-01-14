@@ -1,21 +1,23 @@
 # gulp-unassert
 
+> A [gulp](https://github.com/gulpjs/gulp) plugin for [unassert](https://github.com/unassert-js/unassert).
+
+[![unassert][unassert-banner]][unassert-url]
+
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Dependency Status][depstat-image]][depstat-url]
 [![License][license-image]][license-url]
 
-> A [gulp](https://github.com/gulpjs/gulp) plugin for [unassert](https://github.com/unassert-js/unassert).
-
 
 ## Description
 
-`gulp-unassert` is a gulp plugin to encourage reliable programming by writing assertions in production, and compiling them away from release.
+`gulp-unassert` is a [gulp](https://github.com/gulpjs/gulp) plugin for [unassert](https://github.com/unassert-js/unassert): Encourages [programming with assertions](https://en.wikipedia.org/wiki/Assertion_(software_development)) by providing tools to compile them away.
 
 
 ### Related modules
 
-- [unassert](https://github.com/unassert-js/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassert](https://github.com/unassert-js/unassert): Encourages programming with assertions by providing tools to compile them away.
 - [unassertify](https://github.com/unassert-js/unassertify): Browserify transform for unassert
 - [babel-plugin-unassert](https://github.com/unassert-js/babel-plugin-unassert): Babel plugin for unassert
 - [webpack-unassert-loader](https://github.com/unassert-js/webpack-unassert-loader): Webpack loader for unassert
@@ -91,6 +93,10 @@ NOTE: If gulp-unassert works in any of the unsupported environments, it is purel
 ## License
 
 Licensed under the [MIT](https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT) license.
+
+
+[unassert-url]: https://github.com/unassert-js/unassert
+[unassert-banner]: https://raw.githubusercontent.com/unassert-js/unassert-js-logo/master/banner/banner-official-fullcolor.png
 
 [npm-url]: https://npmjs.org/package/gulp-unassert
 [npm-image]: https://badge.fury.io/js/gulp-unassert.svg
