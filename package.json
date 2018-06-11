@@ -13,7 +13,7 @@
     "bufferstreams": "^2.0.0",
     "buffer-from": "^1.0.0",
     "convert-source-map": "^1.1.2",
-    "escodegen": "^1.7.0",
+    "escodegen": "^1.10.0",
     "gulp-util": "^3.0.0",
     "multi-stage-sourcemap": "^0.2.1",
     "plugin-error": "^1.0.0",
