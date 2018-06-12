@@ -5,20 +5,20 @@ delete require.cache[require.resolve('../')];
 var fs = require('fs');
 var es = require('event-stream');
 var assert = require('power-assert');
-var gutil = require('gulp-util');
+var Vinyl = require('vinyl');
 var unassert = require('../');
 
 describe('gulp-unassert', function () {
 
     it('ES2018 syntax', function (done) {
         var stream = unassert();
-        var srcStream = new gutil.File({
+        var srcStream = new Vinyl({
             path: process.cwd() + "/test/fixtures/es2018/fixture.js",
             cwd: process.cwd(),
             base: process.cwd() + "/test/fixtures/es2018",
             contents: fs.createReadStream('test/fixtures/es2018/fixture.js')
         });
-        var expectedFile = new gutil.File({
+        var expectedFile = new Vinyl({
             path: process.cwd() + '/test/fixtures/es2018/expected.js',
             cwd: process.cwd(),
             base: process.cwd() + '/test/fixtures/es2018',
@@ -44,13 +44,13 @@ describe('gulp-unassert', function () {
     
     it('should produce expected file via buffer', function (done) {
         var stream = unassert();
-        var srcFile = new gutil.File({
+        var srcFile = new Vinyl({
             path: process.cwd() + "/test/fixtures/patterns/fixture.js",
             cwd: process.cwd(),
             base: process.cwd() + "/test/fixtures/patterns",
             contents: fs.readFileSync('test/fixtures/patterns/fixture.js')
         });
-        var expectedFile = new gutil.File({
+        var expectedFile = new Vinyl({
             path: process.cwd() + '/test/fixtures/patterns/expected.js',
             cwd: process.cwd(),
             base: process.cwd() + '/test/fixtures/patterns',
@@ -72,13 +72,13 @@ describe('gulp-unassert', function () {
 
     it('should produce expected file via stream', function (done) {
         var stream = unassert();
-        var srcStream = new gutil.File({
+        var srcStream = new Vinyl({
             path: process.cwd() + "/test/fixtures/patterns/fixture.js",
             cwd: process.cwd(),
             base: process.cwd() + "/test/fixtures/patterns",
             contents: fs.createReadStream('test/fixtures/patterns/fixture.js')
         });
-        var expectedFile = new gutil.File({
+        var expectedFile = new Vinyl({
             path: process.cwd() + '/test/fixtures/patterns/expected.js',
             cwd: process.cwd(),
             base: process.cwd() + '/test/fixtures/patterns',
@@ -104,7 +104,7 @@ describe('gulp-unassert', function () {
     describe('should not throw but emit error when the file has a syntax error', function () {
         it('when file is Buffer', function (done) {
             var stream = unassert();
-            var srcFile = new gutil.File({
+            var srcFile = new Vinyl({
                 path: process.cwd() + "/test/fixtures/syntax-error/fixture.js",
                 cwd: process.cwd(),
                 base: process.cwd() + "/test/fixtures/syntax-error",
@@ -121,7 +121,7 @@ describe('gulp-unassert', function () {
         });
         it('when file is Stream', function (done) {
             var stream = unassert();
-            var srcStream = new gutil.File({
+            var srcStream = new Vinyl({
                 path: process.cwd() + "/test/fixtures/syntax-error/fixture.js",
                 cwd: process.cwd(),
                 base: process.cwd() + "/test/fixtures/syntax-error",
@@ -142,7 +142,7 @@ describe('gulp-unassert', function () {
         it('with initial sourceMap created by gulp-sourcemaps', function (done) {
             var stream = unassert();
             var srcFileContents = fs.readFileSync('test/fixtures/patterns/fixture.js');
-            var srcFile = new gutil.File({
+            var srcFile = new Vinyl({
                 path: process.cwd() + "/test/fixtures/patterns/fixture.js",
                 cwd: process.cwd(),
                 base: process.cwd() + "/test/fixtures/patterns",
@@ -189,7 +189,7 @@ describe('gulp-unassert', function () {
         it('with upstream sourceMap', function (done) {
             var stream = unassert();
             var originalFileContents = fs.readFileSync('test/fixtures/coffee/fixture.coffee', 'utf8');
-            var srcFile = new gutil.File({
+            var srcFile = new Vinyl({
                 path: process.cwd() + "/test/fixtures/coffee/fixture.js",
                 cwd: process.cwd(),
                 base: process.cwd() + "/test/fixtures/coffee",
