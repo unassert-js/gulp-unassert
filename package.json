@@ -10,8 +10,8 @@
   "bugs": "https://github.com/unassert-js/gulp-unassert/issues",
   "dependencies": {
     "acorn": "^5.0.0",
-    "bufferstreams": "^2.0.0",
     "buffer-from": "^1.0.0",
+    "bufferstreams": "^2.0.0",
     "convert-source-map": "^1.1.2",
     "escodegen": "^1.10.0",
     "multi-stage-sourcemap": "^0.2.1",
@@ -37,10 +37,10 @@
   "homepage": "http://github.com/unassert-js/gulp-unassert",
   "keywords": [
     "DbC",
-    "unassert",
     "assert",
     "assertion",
-    "gulpplugin"
+    "gulpplugin",
+    "unassert"
   ],
   "license": "MIT",
   "main": "index.js",
