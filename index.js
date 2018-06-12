@@ -14,6 +14,7 @@
 var unassert = require('unassert');
 var through = require('through2');
 var gutil = require('gulp-util');
+var bufferFrom = require('buffer-from');
 var BufferStreams = require('bufferstreams');
 var acorn = require('acorn');
 var escodegen = require('escodegen');
@@ -65,7 +66,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
     overwritePropertyIfExists('sourceRoot', inMap, reMap);
     overwritePropertyIfExists('file', inMap, reMap);
 
-    file.contents = new Buffer(instrumented.code);
+    file.contents = bufferFrom(instrumented.code);
     file.sourceMap = reMap.toObject();
 }
 
@@ -78,7 +79,7 @@ function transform (file, encoding, opt) {
     if (file.sourceMap) {
         applyUnassertWithSourceMap(file, encoding, opt);
     } else {
-        file.contents = new Buffer(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
+        file.contents = bufferFrom(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
     }
 }
 
@@ -101,7 +102,7 @@ module.exports = function (opt) {
                 } else {
                     try {
                         var modifiedCode = applyUnassertWithoutSourceMap(buf.toString(encoding));
-                        cb(null, new Buffer(modifiedCode));
+                        cb(null, bufferFrom(modifiedCode));
                     } catch (innerError) {
                         return callback(new gutil.PluginError('gulp-unassert', innerError, {showStack: true}));
                     }
