@@ -42,7 +42,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
     var inMap = file.sourceMap;
     var code = file.contents.toString(encoding);
 
-    var ast = acorn.parse(code, { sourceType: 'module', locations: true });
+    var ast = acorn.parse(code, { ecmaVersion: 2018, sourceType: 'module', locations: true });
     var instrumented = escodegen.generate(unassert(ast), {
         file: file.relative,
         sourceMap: file.relative,
@@ -71,7 +71,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
 }
 
 function applyUnassertWithoutSourceMap (code) {
-    var ast = acorn.parse(code, { sourceType: 'module' });
+    var ast = acorn.parse(code, { ecmaVersion: 2018, sourceType: 'module' });
     return escodegen.generate(unassert(ast));
 }
 
