@@ -13,7 +13,8 @@
 
 var unassert = require('unassert');
 var through = require('through2');
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
+var bufferFrom = require('buffer-from');
 var BufferStreams = require('bufferstreams');
 var acorn = require('acorn');
 var escodegen = require('escodegen');
@@ -65,7 +66,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
     overwritePropertyIfExists('sourceRoot', inMap, reMap);
     overwritePropertyIfExists('file', inMap, reMap);
 
-    file.contents = new Buffer(instrumented.code);
+    file.contents = bufferFrom(instrumented.code);
     file.sourceMap = reMap.toObject();
 }
 
@@ -78,7 +79,7 @@ function transform (file, encoding, opt) {
     if (file.sourceMap) {
         applyUnassertWithSourceMap(file, encoding, opt);
     } else {
-        file.contents = new Buffer(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
+        file.contents = bufferFrom(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
     }
 }
 
@@ -92,18 +93,18 @@ module.exports = function (opt) {
                 transform(file, encoding, opt);
                 this.push(file);
             } catch (err) {
-                return callback(new gutil.PluginError('gulp-unassert', err, {showStack: true}));
+                return callback(new PluginError('gulp-unassert', err, {showStack: true}));
             }
         } else if (file.isStream()) {
             file.contents = file.contents.pipe(new BufferStreams(function(err, buf, cb) {
                 if(err) {
-                    cb(new gutil.PluginError('gulp-unassert', err, {showStack: true}));
+                    cb(new PluginError('gulp-unassert', err, {showStack: true}));
                 } else {
                     try {
                         var modifiedCode = applyUnassertWithoutSourceMap(buf.toString(encoding));
-                        cb(null, new Buffer(modifiedCode));
+                        cb(null, bufferFrom(modifiedCode));
                     } catch (innerError) {
-                        return callback(new gutil.PluginError('gulp-unassert', innerError, {showStack: true}));
+                        return callback(new PluginError('gulp-unassert', innerError, {showStack: true}));
                     }
                 }
             }));
