@@ -1,7 +1,7 @@
 {
   "name": "gulp-unassert",
   "description": "Gulp plugin for unassert: Encourages programming with assertions by providing tools to compile them away",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "Takuto Wada",
     "email": "takuto.wada@gmail.com",
