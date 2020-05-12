@@ -83,7 +83,7 @@ See [CHANGELOG](https://github.com/unassert-js/gulp-unassert/blob/master/CHANGEL
 
 ## Our Support Policy
 
-We support Node under maintenance. In other words, we stop supporting old Node version when [their maintenance ends](https://github.com/nodejs/LTS).
+We support Node under maintenance. In other words, we stop supporting old Node version when [their maintenance ends](https://github.com/nodejs/Release).
 
 This means that any other environment is not supported.
 
