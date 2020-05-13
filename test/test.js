@@ -1,39 +1,39 @@
-/* global describe, it */
 'use strict';
 
 delete require.cache[require.resolve('../')];
-var fs = require('fs');
-var es = require('event-stream');
-var assert = require('power-assert');
-var Vinyl = require('vinyl');
-var unassert = require('../');
+const unassert = require('../');
+const fs = require('fs');
+const { join } = require('path');
+const es = require('event-stream');
+const assert = require('assert').strict;
+const Vinyl = require('vinyl');
 
-describe('gulp-unassert', function () {
-  ['es2018', 'es2019'].forEach(function (name) {
-    it(name + ' syntax', function (done) {
-      var stream = unassert();
-      var srcStream = new Vinyl({
-        path: process.cwd() + '/test/fixtures/' + name + '/fixture.js',
+describe('gulp-unassert', () => {
+  ['es2018', 'es2019'].forEach((name) => {
+    it(name + ' syntax', (done) => {
+      const stream = unassert();
+      const srcStream = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', name, 'fixture.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/' + name,
-        contents: fs.createReadStream('test/fixtures/' + name + '/fixture.js')
+        base: join(process.cwd(), 'test', 'fixtures', name),
+        contents: fs.createReadStream(join('test', 'fixtures', name, 'fixture.js'))
       });
-      var expectedFile = new Vinyl({
-        path: process.cwd() + '/test/fixtures/' + name + '/expected.js',
+      const expectedFile = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', name, 'expected.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/' + name,
-        contents: fs.readFileSync('test/fixtures/' + name + '/expected.js')
+        base: join(process.cwd(), 'test', 'fixtures', name),
+        contents: fs.readFileSync(join('test', 'fixtures', name, 'expected.js'))
       });
-      stream.on('error', function (err) {
+      stream.on('error', (err) => {
         assert(!err.message);
         done();
       });
-      stream.on('data', function (newFile) {
+      stream.on('data', (newFile) => {
         assert(newFile);
         assert(newFile.contents);
-        newFile.contents.pipe(es.wait(function (err, data) {
+        newFile.contents.pipe(es.wait((err, data) => {
           assert(!err);
-          assert.equal(data.toString('utf-8') + '\n', String(expectedFile.contents));
+          assert.equal(String(data.toString('utf-8')) + '\n', String(expectedFile.contents));
           done();
         }));
       });
@@ -42,25 +42,25 @@ describe('gulp-unassert', function () {
     });
   });
 
-  it('should produce expected file via buffer', function (done) {
-    var stream = unassert();
-    var srcFile = new Vinyl({
-      path: process.cwd() + '/test/fixtures/patterns/fixture.js',
+  it('should produce expected file via buffer', (done) => {
+    const stream = unassert();
+    const srcFile = new Vinyl({
+      path: join(process.cwd(), 'test', 'fixtures', 'patterns', 'fixture.js'),
       cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/patterns',
-      contents: fs.readFileSync('test/fixtures/patterns/fixture.js')
+      base: join(process.cwd(), 'test', 'fixtures', 'patterns'),
+      contents: fs.readFileSync(join('test', 'fixtures', 'patterns', 'fixture.js'))
     });
-    var expectedFile = new Vinyl({
-      path: process.cwd() + '/test/fixtures/patterns/expected.js',
+    const expectedFile = new Vinyl({
+      path: join(process.cwd(), 'test', 'fixtures', 'patterns', 'expected.js'),
       cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/patterns',
-      contents: fs.readFileSync('test/fixtures/patterns/expected.js')
+      base: join(process.cwd(), 'test', 'fixtures', 'patterns'),
+      contents: fs.readFileSync(join('test', 'fixtures', 'patterns', 'expected.js'))
     });
-    stream.on('error', function (err) {
+    stream.on('error', (err) => {
       assert(err);
       done(err);
     });
-    stream.on('data', function (newFile) {
+    stream.on('data', (newFile) => {
       assert(newFile);
       assert(newFile.contents);
       assert.equal(String(newFile.contents), String(expectedFile.contents));
@@ -70,28 +70,28 @@ describe('gulp-unassert', function () {
     stream.end();
   });
 
-  it('should produce expected file via stream', function (done) {
-    var stream = unassert();
-    var srcStream = new Vinyl({
-      path: process.cwd() + '/test/fixtures/patterns/fixture.js',
+  it('should produce expected file via stream', (done) => {
+    const stream = unassert();
+    const srcStream = new Vinyl({
+      path: join(process.cwd(), 'test', 'fixtures', 'patterns', 'fixture.js'),
       cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/patterns',
-      contents: fs.createReadStream('test/fixtures/patterns/fixture.js')
+      base: join(process.cwd(), 'test', 'fixtures', 'patterns'),
+      contents: fs.createReadStream(join('test', 'fixtures', 'patterns', 'fixture.js'))
     });
-    var expectedFile = new Vinyl({
-      path: process.cwd() + '/test/fixtures/patterns/expected.js',
+    const expectedFile = new Vinyl({
+      path: join(process.cwd(), 'test', 'fixtures', 'patterns', 'expected.js'),
       cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/patterns',
-      contents: fs.readFileSync('test/fixtures/patterns/expected.js')
+      base: join(process.cwd(), 'test', 'fixtures', 'patterns'),
+      contents: fs.readFileSync(join('test', 'fixtures', 'patterns', 'expected.js'))
     });
-    stream.on('error', function (err) {
+    stream.on('error', (err) => {
       assert(err);
       done();
     });
-    stream.on('data', function (newFile) {
+    stream.on('data', (newFile) => {
       assert(newFile);
       assert(newFile.contents);
-      newFile.contents.pipe(es.wait(function (err, data) {
+      newFile.contents.pipe(es.wait((err, data) => {
         assert(!err);
         assert.equal(data.toString('utf-8'), String(expectedFile.contents));
         done();
@@ -101,17 +101,17 @@ describe('gulp-unassert', function () {
     stream.end();
   });
 
-  describe('should not throw but emit error when the file has a syntax error', function () {
-    it('when file is Buffer', function (done) {
-      var stream = unassert();
-      var srcFile = new Vinyl({
-        path: process.cwd() + '/test/fixtures/syntax-error/fixture.js',
+  describe('should not throw but emit error when the file has a syntax error', () => {
+    it('when file is Buffer', (done) => {
+      const stream = unassert();
+      const srcFile = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', 'syntax-error', 'fixture.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/syntax-error',
-        contents: fs.readFileSync('test/fixtures/syntax-error/fixture.js')
+        base: join(process.cwd(), 'test', 'fixtures', 'syntax-error'),
+        contents: fs.readFileSync(join('test', 'fixtures', 'syntax-error', 'fixture.js'))
       });
-      assert.doesNotThrow(function () {
-        stream.on('error', function (err) {
+      assert.doesNotThrow(() => {
+        stream.on('error', (err) => {
           assert(err);
           done();
         });
@@ -119,16 +119,16 @@ describe('gulp-unassert', function () {
         stream.end();
       });
     });
-    it('when file is Stream', function (done) {
-      var stream = unassert();
-      var srcStream = new Vinyl({
-        path: process.cwd() + '/test/fixtures/syntax-error/fixture.js',
+    it('when file is Stream', (done) => {
+      const stream = unassert();
+      const srcStream = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', 'syntax-error', 'fixture.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/syntax-error',
-        contents: fs.createReadStream('test/fixtures/syntax-error/fixture.js')
+        base: join(process.cwd(), 'test', 'fixtures', 'syntax-error'),
+        contents: fs.createReadStream(join('test', 'fixtures', 'syntax-error', 'fixture.js'))
       });
-      assert.doesNotThrow(function () {
-        stream.on('error', function (err) {
+      assert.doesNotThrow(() => {
+        stream.on('error', (err) => {
           assert(err);
           done();
         });
@@ -138,14 +138,14 @@ describe('gulp-unassert', function () {
     });
   });
 
-  describe('SourceMap support', function () {
-    it('with initial sourceMap created by gulp-sourcemaps', function (done) {
-      var stream = unassert();
-      var srcFileContents = fs.readFileSync('test/fixtures/patterns/fixture.js');
-      var srcFile = new Vinyl({
-        path: process.cwd() + '/test/fixtures/patterns/fixture.js',
+  describe('SourceMap support', () => {
+    it('with initial sourceMap created by gulp-sourcemaps', (done) => {
+      const stream = unassert();
+      const srcFileContents = fs.readFileSync(join('test', 'fixtures', 'patterns', 'fixture.js'));
+      const srcFile = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', 'patterns', 'fixture.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/patterns',
+        base: join(process.cwd(), 'test', 'fixtures', 'patterns'),
         contents: srcFileContents
       });
       // simulate initial raw map created by gulp-sourcemaps
@@ -157,14 +157,15 @@ describe('gulp-unassert', function () {
         sources: [srcFile.relative],
         sourcesContent: [srcFileContents.toString('utf8')]
       };
-      stream.on('error', function (err) {
+      stream.on('error', (err) => {
         assert(err);
         done(err);
       });
-      stream.on('data', function (newFile) {
+      stream.on('data', (newFile) => {
         assert(newFile);
         assert(newFile.contents);
-        assert.equal(newFile.contents.toString(), fs.readFileSync('test/fixtures/patterns/expected.js', 'utf8'));
+        const expectedContent = fs.readFileSync(join('test', 'fixtures', 'patterns', 'expected.js'), 'utf8');
+        assert.equal(newFile.contents.toString(), expectedContent);
         assert(newFile.sourceMap, 'push file.sourceMap to downstream');
         assert.deepEqual(newFile.sourceMap, {
           version: 3,
@@ -186,14 +187,14 @@ describe('gulp-unassert', function () {
       stream.end();
     });
 
-    it('with upstream sourceMap', function (done) {
-      var stream = unassert();
-      var originalFileContents = fs.readFileSync('test/fixtures/coffee/fixture.coffee', 'utf8');
-      var srcFile = new Vinyl({
-        path: process.cwd() + '/test/fixtures/coffee/fixture.js',
+    it('with upstream sourceMap', (done) => {
+      const stream = unassert();
+      const originalFileContents = fs.readFileSync(join(process.cwd(), 'test', 'fixtures', 'coffee', 'fixture.coffee'), 'utf8');
+      const srcFile = new Vinyl({
+        path: join(process.cwd(), 'test', 'fixtures', 'coffee', 'fixture.js'),
         cwd: process.cwd(),
-        base: process.cwd() + '/test/fixtures/coffee',
-        contents: fs.readFileSync('test/fixtures/coffee/fixture.js')
+        base: join(process.cwd(), 'test', 'fixtures', 'coffee'),
+        contents: fs.readFileSync(join(process.cwd(), 'test', 'fixtures', 'coffee', 'fixture.js'))
       });
       srcFile.sourceMap = {
         version: 3,
@@ -204,14 +205,15 @@ describe('gulp-unassert', function () {
         sourceRoot: '',
         sourcesContent: [originalFileContents]
       };
-      stream.on('error', function (err) {
+      stream.on('error', (err) => {
         assert(err);
         done(err);
       });
-      stream.on('data', function (newFile) {
+      stream.on('data', (newFile) => {
         assert(newFile);
         assert(newFile.contents);
-        assert.equal(newFile.contents.toString() + '\n', fs.readFileSync('test/fixtures/coffee/expected.js', 'utf8'));
+        const expectedContent = fs.readFileSync(join(process.cwd(), 'test', 'fixtures', 'coffee', 'expected.js'), 'utf8');
+        assert.equal(newFile.contents.toString() + '\n', expectedContent);
         assert(newFile.sourceMap, 'push file.sourceMap to downstream');
         assert.deepEqual(newFile.sourceMap, {
           version: 3,
