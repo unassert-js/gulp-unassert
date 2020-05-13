@@ -9,35 +9,37 @@ var Vinyl = require('vinyl');
 var unassert = require('../');
 
 describe('gulp-unassert', function () {
-  it('ES2018 syntax', function (done) {
-    var stream = unassert();
-    var srcStream = new Vinyl({
-      path: process.cwd() + '/test/fixtures/es2018/fixture.js',
-      cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/es2018',
-      contents: fs.createReadStream('test/fixtures/es2018/fixture.js')
-    });
-    var expectedFile = new Vinyl({
-      path: process.cwd() + '/test/fixtures/es2018/expected.js',
-      cwd: process.cwd(),
-      base: process.cwd() + '/test/fixtures/es2018',
-      contents: fs.readFileSync('test/fixtures/es2018/expected.js')
-    });
-    stream.on('error', function (err) {
-      assert(!err.message);
-      done();
-    });
-    stream.on('data', function (newFile) {
-      assert(newFile);
-      assert(newFile.contents);
-      newFile.contents.pipe(es.wait(function (err, data) {
-        assert(!err);
-        assert.equal(data.toString('utf-8') + '\n', String(expectedFile.contents));
+  ['es2018', 'es2019'].forEach(function (name) {
+    it(name + ' syntax', function (done) {
+      var stream = unassert();
+      var srcStream = new Vinyl({
+        path: process.cwd() + '/test/fixtures/' + name + '/fixture.js',
+        cwd: process.cwd(),
+        base: process.cwd() + '/test/fixtures/' + name,
+        contents: fs.createReadStream('test/fixtures/' + name + '/fixture.js')
+      });
+      var expectedFile = new Vinyl({
+        path: process.cwd() + '/test/fixtures/' + name + '/expected.js',
+        cwd: process.cwd(),
+        base: process.cwd() + '/test/fixtures/' + name,
+        contents: fs.readFileSync('test/fixtures/' + name + '/expected.js')
+      });
+      stream.on('error', function (err) {
+        assert(!err.message);
         done();
-      }));
+      });
+      stream.on('data', function (newFile) {
+        assert(newFile);
+        assert(newFile.contents);
+        newFile.contents.pipe(es.wait(function (err, data) {
+          assert(!err);
+          assert.equal(data.toString('utf-8') + '\n', String(expectedFile.contents));
+          done();
+        }));
+      });
+      stream.write(srcStream);
+      stream.end();
     });
-    stream.write(srcStream);
-    stream.end();
   });
 
   it('should produce expected file via buffer', function (done) {
