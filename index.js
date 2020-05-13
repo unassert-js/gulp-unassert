@@ -11,15 +11,15 @@
  */
 'use strict';
 
-var unassert = require('unassert');
-var through = require('through2');
-var PluginError = require('plugin-error');
-var BufferStreams = require('bufferstreams');
-var acorn = require('acorn');
-var escodegen = require('escodegen');
-var applySourceMap = require('vinyl-sourcemaps-apply');
-var convert = require('convert-source-map');
-var transfer = require('multi-stage-sourcemap').transfer;
+const unassert = require('unassert');
+const through = require('through2');
+const PluginError = require('plugin-error');
+const BufferStreams = require('bufferstreams');
+const acorn = require('acorn');
+const escodegen = require('escodegen');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const convert = require('convert-source-map');
+const { transfer } = require('multi-stage-sourcemap');
 
 function mergeSourceMap (incomingSourceMap, outgoingSourceMap) {
   if (typeof outgoingSourceMap === 'string' || outgoingSourceMap instanceof String) {
@@ -38,21 +38,21 @@ function overwritePropertyIfExists (name, from, to) {
 }
 
 function applyUnassertWithSourceMap (file, encoding, opt) {
-  var inMap = file.sourceMap;
-  var code = file.contents.toString(encoding);
+  const inMap = file.sourceMap;
+  const code = file.contents.toString(encoding);
 
-  var ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module', locations: true });
-  var instrumented = escodegen.generate(unassert(ast), {
+  const ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module', locations: true });
+  const instrumented = escodegen.generate(unassert(ast), {
     file: file.relative,
     sourceMap: file.relative,
     sourceMapWithCode: true
   });
-  var outMap = convert.fromJSON(instrumented.map.toString());
+  const outMap = convert.fromJSON(instrumented.map.toString());
   overwritePropertyIfExists('sources', inMap, outMap);
   overwritePropertyIfExists('sourcesContent', inMap, outMap);
   overwritePropertyIfExists('sourceRoot', inMap, outMap);
 
-  var reMap;
+  let reMap;
   if (inMap.mappings === '') {
     // when incoming SourceMap is an initial sourceMap created by gulp-sourcemaps
     applySourceMap(file, outMap.toJSON());
@@ -70,7 +70,7 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
 }
 
 function applyUnassertWithoutSourceMap (code) {
-  var ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module' });
+  const ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module' });
   return escodegen.generate(unassert(ast));
 }
 
@@ -82,7 +82,7 @@ function transform (file, encoding, opt) {
   }
 }
 
-module.exports = function (opt) {
+module.exports = (opt) => {
   return through.obj(function (file, encoding, callback) {
     encoding = encoding || 'utf8';
     if (file.isNull()) {
@@ -95,12 +95,12 @@ module.exports = function (opt) {
         return callback(new PluginError('gulp-unassert', err, { showStack: true }));
       }
     } else if (file.isStream()) {
-      file.contents = file.contents.pipe(new BufferStreams(function (err, buf, cb) {
+      file.contents = file.contents.pipe(new BufferStreams((err, buf, cb) => {
         if (err) {
           cb(new PluginError('gulp-unassert', err, { showStack: true }));
         } else {
           try {
-            var modifiedCode = applyUnassertWithoutSourceMap(buf.toString(encoding));
+            const modifiedCode = applyUnassertWithoutSourceMap(buf.toString(encoding));
             cb(null, Buffer.from(modifiedCode));
           } catch (innerError) {
             return callback(new PluginError('gulp-unassert', innerError, { showStack: true }));
