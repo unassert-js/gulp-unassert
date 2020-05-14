@@ -1,3 +1,20 @@
+## [2.0.0](http://github.com/unassert-js/gulp-unassert/releases/tag/v2.0.0) (2020-05-14)
+
+
+#### Features
+
+* [Modernize codebase and dependencies](https://github.com/unassert-js/gulp-unassert/pull/5)
+* Support syntax of ES2019 and ES2020 (experimental) ([c4a1715a](http://github.com/unassert-js/gulp-unassert/commit/c4a1715aba96292fabb8ea3fd14f012a84aef66a))
+
+
+#### Breaking Changes
+
+* drop support for old Node versions (Node < 10)
+Users of old Nodes should install `gulp-unassert@1.x`
+
+ ([26a09349](http://github.com/unassert-js/gulp-unassert/commit/26a0934912d1e836043623e67f010bd37f2dcda3))
+
+
 ## [1.1.0](http://github.com/unassert-js/gulp-unassert/releases/tag/v1.1.0) (2018-06-12)
 
 
