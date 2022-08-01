@@ -9,7 +9,7 @@ const assert = require('assert').strict;
 const Vinyl = require('vinyl');
 
 describe('gulp-unassert', () => {
-  for (const name of ['es2018', 'es2019']) {
+  for (const name of ['es2017', 'es2018', 'es2019']) {
     it(name + ' syntax', (done) => {
       const stream = unassert();
       const srcStream = new Vinyl({
