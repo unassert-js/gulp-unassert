@@ -22,6 +22,7 @@
 - [babel-plugin-unassert](https://github.com/unassert-js/babel-plugin-unassert): Babel plugin for unassert
 - [webpack-unassert-loader](https://github.com/unassert-js/webpack-unassert-loader): Webpack loader for unassert
 - [unassert-cli](https://github.com/unassert-js/unassert-cli): CLI for unassert
+- [rollup-plugin-unassert](https://github.com/unassert-js/rollup-plugin-unassert): RollupJS plugin for unassert
 
 
 ## Install
