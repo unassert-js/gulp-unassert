@@ -9,24 +9,24 @@
   },
   "bugs": "https://github.com/unassert-js/gulp-unassert/issues",
   "dependencies": {
-    "acorn": "^7.0.0",
+    "acorn": "^8.0.0",
     "bufferstreams": "^3.0.0",
     "convert-source-map": "^1.1.2",
-    "escodegen": "^1.10.0",
+    "escodegen": "^2.0.0",
     "multi-stage-sourcemap": "^0.3.1",
-    "plugin-error": "^1.0.0",
-    "through2": "^3.0.0",
-    "unassert": "^1.3.1",
+    "plugin-error": "^2.0.0",
+    "through2": "^4.0.0",
+    "unassert": "^2.0.0",
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
   "devDependencies": {
     "espower-loader": "^1.0.1",
     "event-stream": "^4.0.0",
-    "intelli-espower-loader": "^1.0.1",
-    "mocha": "^7.0.0",
+    "intelli-espower-loader": "^1.1.0",
+    "mocha": "^10.0.0",
     "power-assert": "^1.4.1",
-    "semistandard": "^14.2.0",
-    "snazzy": "^8.0.0",
+    "semistandard": "^16.0.0",
+    "snazzy": "^9.0.0",
     "vinyl": "^2.0.0"
   },
   "files": [

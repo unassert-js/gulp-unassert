@@ -11,7 +11,7 @@
  */
 'use strict';
 
-const unassert = require('unassert');
+const { unassertAst } = require('unassert');
 const through = require('through2');
 const PluginError = require('plugin-error');
 const BufferStreams = require('bufferstreams');
@@ -41,8 +41,8 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
   const inMap = file.sourceMap;
   const code = file.contents.toString(encoding);
 
-  const ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module', locations: true });
-  const instrumented = escodegen.generate(unassert(ast), {
+  const ast = acorn.parse(code, { ecmaVersion: 'latest', sourceType: 'module', locations: true });
+  const instrumented = escodegen.generate(unassertAst(ast, opt), {
     file: file.relative,
     sourceMap: file.relative,
     sourceMapWithCode: true
@@ -69,16 +69,16 @@ function applyUnassertWithSourceMap (file, encoding, opt) {
   file.sourceMap = reMap.toObject();
 }
 
-function applyUnassertWithoutSourceMap (code) {
-  const ast = acorn.parse(code, { ecmaVersion: 2020, sourceType: 'module' });
-  return escodegen.generate(unassert(ast));
+function applyUnassertWithoutSourceMap (code, opt) {
+  const ast = acorn.parse(code, { ecmaVersion: 'latest', sourceType: 'module' });
+  return escodegen.generate(unassertAst(ast, opt));
 }
 
 function transform (file, encoding, opt) {
   if (file.sourceMap) {
     applyUnassertWithSourceMap(file, encoding, opt);
   } else {
-    file.contents = Buffer.from(applyUnassertWithoutSourceMap(file.contents.toString(encoding)));
+    file.contents = Buffer.from(applyUnassertWithoutSourceMap(file.contents.toString(encoding), opt));
   }
 }
 
