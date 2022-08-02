@@ -1,3 +1,13 @@
+## [3.0.0](http://github.com/unassert-js/gulp-unassert/releases/tag/v3.0.0) (2022-08-02)
+
+
+#### Features
+
+* [Update unassert to v2.0.0](https://github.com/unassert-js/gulp-unassert/pull/14)
+  * accept unassert options for customization ([12307440](http://github.com/unassert-js/gulp-unassert/commit/123074401f60387a4cb99f14cf4c19b197584fd8))
+* change `.js` to `.cjs` ([c2f20b1e](https://github.com/unassert-js/gulp-unassert/commit/c2f20b1ed62ff5a59495a9b2bd46ccb78a30db5b))
+
+
 ## [2.0.0](http://github.com/unassert-js/gulp-unassert/releases/tag/v2.0.0) (2020-05-14)
 
 
