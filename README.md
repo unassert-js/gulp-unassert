@@ -58,6 +58,27 @@ function build() {
 exports.build = build;
 ```
 
+### custom unassert options
+
+```javascript
+const { src, dest } = require('gulp');
+const unassert = require('gulp-unassert');
+
+function build() {
+  return src('./src/*.js')
+    .pipe(unassert({
+      modules: [
+        'node:assert',
+        'node:assert/strict',
+        'invariant',
+        'uvu/assert'
+      ]
+    }))
+    .pipe(dest('./dist'));
+}
+exports.build = build;
+```
+
 
 ## Source maps
 
