@@ -3,7 +3,7 @@
 delete require.cache[require.resolve('../')];
 const unassert = require('../');
 const fs = require('fs');
-const { join } = require('path');
+const { join, dirname } = require('path');
 const es = require('event-stream');
 const assert = require('assert').strict;
 const Vinyl = require('vinyl');
@@ -136,6 +136,45 @@ describe('gulp-unassert', () => {
         stream.end();
       });
     });
+  });
+
+  it('custom options', (done) => {
+    const stream = unassert({
+      modules: [
+        'node:assert',
+        'node:assert/strict',
+        'power-assert',
+        'invariant',
+        'nanoassert',
+        'uvu/assert'
+      ]
+    });
+    const fixturePath = join(process.cwd(), 'test', 'fixtures', 'custom_modules_mjs', 'fixture.mjs');
+    const srcFile = new Vinyl({
+      path: fixturePath,
+      cwd: process.cwd(),
+      base: dirname(fixturePath),
+      contents: fs.readFileSync(fixturePath)
+    });
+    const expectedFilePath = join(process.cwd(), 'test', 'fixtures', 'custom_modules_mjs', 'expected.mjs');
+    const expectedFile = new Vinyl({
+      path: expectedFilePath,
+      cwd: process.cwd(),
+      base: dirname(expectedFilePath),
+      contents: fs.readFileSync(expectedFilePath)
+    });
+    stream.on('error', (err) => {
+      assert(err);
+      done(err);
+    });
+    stream.on('data', (newFile) => {
+      assert(newFile);
+      assert(newFile.contents);
+      assert.equal(String(newFile.contents) + '\n', String(expectedFile.contents));
+      done();
+    });
+    stream.write(srcFile);
+    stream.end();
   });
 
   describe('SourceMap support', () => {
