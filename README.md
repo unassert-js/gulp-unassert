@@ -68,6 +68,8 @@ function build() {
   return src('./src/*.js')
     .pipe(unassert({
       modules: [
+        'assert',
+        'assert/strict',
         'node:assert',
         'node:assert/strict',
         'invariant',
