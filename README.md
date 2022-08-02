@@ -4,7 +4,7 @@
 
 [![unassert][unassert-banner]][unassert-url]
 
-[![Build Status][travis-image]][travis-url]
+[![Build Status][ci-image]][ci-url]
 [![NPM version][npm-image]][npm-url]
 [![Code Style][style-image]][style-url]
 [![License][license-image]][license-url]
@@ -159,8 +159,8 @@ Licensed under the [MIT](https://github.com/unassert-js/gulp-unassert/blob/maste
 [npm-url]: https://npmjs.org/package/gulp-unassert
 [npm-image]: https://badge.fury.io/js/gulp-unassert.svg
 
-[travis-url]: https://travis-ci.org/unassert-js/gulp-unassert
-[travis-image]: https://secure.travis-ci.org/unassert-js/gulp-unassert.svg?branch=master
+[ci-image]: https://github.com/unassert-js/gulp-unassert/workflows/Node.js%20CI/badge.svg
+[ci-url]: https://github.com/unassert-js/gulp-unassert/actions?query=workflow%3A%22Node.js+CI%22
 
 [license-url]: https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
