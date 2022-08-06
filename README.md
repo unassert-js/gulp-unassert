@@ -168,5 +168,5 @@ Licensed under the [MIT](https://github.com/unassert-js/gulp-unassert/blob/maste
 [license-url]: https://github.com/unassert-js/gulp-unassert/blob/master/LICENSE-MIT
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 
-[style-url]: https://github.com/Flet/semistandard
+[style-url]: https://github.com/standard/semistandard
 [style-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg
